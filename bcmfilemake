@@ -1,0 +1,25 @@
+CXX = mingw32-g++
+BM_LIB = -L"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\OBJ" -lWrapper_CAN
+
+BM_INCLUDES = -I"C:\Program Files (x86)\BUSMASTER_v3.2.2\SimulatedSystems\Include"
+
+CXXFLAGS = -Wall -c
+#$(BM_INCLUDE)
+
+dll = bcmfile.dll
+
+DBOBJFILE = "C:\ProgramData\BUSMASTER\General\DBCache\E187_gcc4.8.1.obj" 
+
+DBINCLUDES = -include"C:\ProgramData\BUSMASTER\General\DBCache\E187.h" 
+
+
+all: $(dll)
+
+$(dll): bcmfile.o
+	$(CXX) -shared -Wl,--dll  bcmfile.o $(DBOBJFILE) $(BM_LIB) -o $@
+
+bcmfile.o: C:/Users/uig43645/ONEDRI~1/Desktop/BUS-MA~1/bcmfile.cpp
+	$(CXX) $(DBINCLUDES) $(CXXFLAGS) $(BM_INCLUDES) $< -o $@
+
+clean: 
+	del /f bcmfile.o
